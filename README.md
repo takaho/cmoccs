@@ -4,15 +4,18 @@ cmoccs
 MOCCS implementation in C++
 
 INSTALL
+==
 
 tar xfvz moccs-X.Y.Z.tar.gz
 ./configure && make && make install
 
 How to use
+==
 
 moccs [OPTIONS]
 
 OPTIONS
+==
 	-i <filename>
 	   input filename, multiple fasta files containing sequences around peaks
 
