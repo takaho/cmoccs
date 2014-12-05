@@ -178,12 +178,12 @@ fastareader* fastareader::deserialize(const char* filename) throw (exception) {
 }
 
 fastareader* fastareader::load_genome(const char* filename) throw (exception) {
-    try {
-        //fastareader* reader = NULL;
-        fastareader* reader = deserialize(filename);
-        return reader;
-    } catch (exception& e) {
-    }
+    // try {
+    //     //fastareader* reader = NULL;
+    //     fastareader* reader = deserialize(filename);
+    //     return reader;
+    // } catch (exception& e) {
+    // }
     ifstream fi(filename);
     if (fi.is_open() == false) {
         throw runtime_error(string("cannot open ") + filename);
@@ -210,6 +210,7 @@ fastareader* fastareader::load_genome(const char* filename) throw (exception) {
             position = 0;
             next_position = skip;
             name = line.substr(1, line.size() - 1);
+            std::cerr << "NAME : " << name << " at " << fpos << endl;
             positions.push_back(make_pair(fi.tellg(), 0));
         } else {
             if (position >= next_position) {

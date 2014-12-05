@@ -426,15 +426,18 @@ moccs_result::moccs_result() {
 //     return *this;
 // }
 
-// moccs_result::moccs_result(const moccs_result& rhs) {
-//     this->index = rhs.index;
-//     this->motif = rhs.motif;
-//     this->score = rhs.score;
-//     this->observed = rhs.observed;
-//     this->datasize = rhs.datasize;
-//     this->counts = new int[rhs.datasize];
-//     memcpy(this->counts, rhs.counts, sizeof(int) * rhs.datasize);
-// }
+moccs_result::moccs_result(const moccs_result& rhs) {
+    _motifsize = rhs._motifsize;
+    _motif = rhs._motif;
+    _score = rhs._score;
+    _observed = rhs._observed;
+    _expected = rhs._expected;
+    _datasize = rhs._datasize;
+    _pvalue = rhs._pvalue;
+    _includes_complementary = rhs._includes_complementary;
+    _counts = new int[rhs._datasize];
+    memcpy(_counts, rhs._counts, sizeof(int) * rhs._datasize);
+}
 
         // moccs_result(int index, unsigned int motif, int observed, double score) {
         //     this->index = index;
@@ -450,11 +453,8 @@ moccs_result::~moccs_result() {
 
 //moccs_result::moccs_result(int index, unsigned int motif, int observed, double score, int distance, int const* counts) {
 moccs_result::moccs_result(int motifsize, unsigned int motif, int distance, int const* counts) {
-    //_index = index;
     _motifsize = motifsize;
     _motif = motif;
-    //_score = score;
-    //_observed = observed;
     _datasize = distance;
     _counts = new int[distance];
     _score = 0.0;
@@ -478,43 +478,14 @@ bool moccs_result::compare_score(const moccs_result* lhs, const moccs_result* rh
 }
 
 std::string moccs_result::to_string() const {
-    //cerr << "sorted\n";
-    //sort(scores.begin(), scores.end(), sort_by_second<int,double>);
-    //int index = 0;
-    //int num_display = 0;
-    //cout << index << ":" << max_num << " : " << _size << endl;
     string contents;
     std::stringstream ss;
-    ss << motif_counter::decode_sequence(_motifsize, _motif);// << "\t" <<
+    ss << motif_counter::decode_sequence(_motifsize, _motif);
     if (_includes_complementary) ss << "/" << motif_counter::decode_sequence(_motifsize, _motif, true);
     ss << "\t" << _observed << "/" << std::setprecision(3) << _expected;
     ss << "\t" << _score;
     for (int i = 0; i < _datasize; i++) {
-        ss << (i == 0 ? "\t" : ",") << _counts[i];//_count[result.index][j];
+        ss << (i == 0 ? "\t" : ",") << _counts[i];
     }
     return ss.str();
 }
-
-// bool moccs_result::compare_score(const moccs_result* lhs, const moccs_result* rhs) {
-//     return lhs->_score > rhs->_score;
-// }
-//     while (num_display < max_num && index < _size) {
-//         //cerr << index << ", " << num_display << " " << max_num << endl;
-//         stringstream ss;
-//         const moccs_result* result = scores[index];
-//         num_display++;
-//         ss << num_display
-//            << "\t" << decode_sequence(_motifsize, result.motif)
-//            << "\t" << decode_sequence(_motifsize, result.motif, true)
-//            << "\t" << result.observed << "\t" << result.score;
-        
-//         for (int j = 0; j < _distance; j++) {
-//             ss << (j == 0 ? "\t" : ",") << result.counts[j];//_count[result.index][j];
-//         }
-//         ss << "\n";
-//         index++;
-//         contents += ss.str();
-//     }
-//     //cerr << "constructed\n";
-//     return contents;
-// }

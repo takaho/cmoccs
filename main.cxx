@@ -50,12 +50,13 @@ namespace {
 }
 
 int main(int argc, char** argv) {
-    // if (1) {
-    //     fastareader* r = fastareader::load_genome("/Data/Genomes/M_musculus/mm9/mm9.mfa");
-    //     cout << r->get_sequence("chr8", 110011000, 110012000) << endl;
-    //     delete r;
-    //     exit(0);
-    // }
+    if (1) {
+        const char* filename = argc < 2 ? "/Data/Genomes/M_musculus/mm9/mm9.mfa" : argv[1];
+        fastareader* r = fastareader::load_genome(filename);
+        cout << r->get_sequence("chr8", 110011000, 110012000) << endl;
+        delete r;
+        exit(0);
+    }
     
     try {
         enum file_mode {BED=1, FASTA=2};

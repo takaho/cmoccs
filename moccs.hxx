@@ -6,6 +6,8 @@ using std::string;
 using std::exception;
 using std::vector;
 
+typedef unsigned int uint;
+
 namespace tkbio {
     class motif_counter;
     class moccs_result {
@@ -14,9 +16,8 @@ namespace tkbio {
         const moccs_result& operator =(const moccs_result& rhs);
         moccs_result(const moccs_result& rhs);
     private:        
-        //int _index;
         int _motifsize;
-        unsigned int _motif;
+        uint _motif;
         int _observed;
         double _score;
         int _datasize;
